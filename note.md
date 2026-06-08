@@ -17,14 +17,29 @@ Viewed TodoForm.jsx:1-28
 
 ---
 
+tư duy chia components
+edit nên làm sau cùng
+lưu ý về validate
+sửa truy vấn dữ liệu ra hiển trị giống form thêm nhưng hiển thị dữ liệu rỗng ra
+trả lời jsx là gì
+cú pháp chuyển từ html sang cấu trúc REACT
+phân biệt props và state
+
+props: truyền từ cha xuống con
+state: data gắn liền với component trong ngữ cảnh kết hợp với useState
+và phải có render có điều kiện cấu trúc if else trong jsx
+Composition: chia giao diện thành các component nhỏ và cách kết hợp lại
+
+cái này là tìm hiểu :cơ chế react căn cứ vào url gọi ra components tương ứng => bắt url định tuyến => gọi ra component tương ứng
+
 ## 🏗️ Cấu trúc cây component
 
 ```
 App.jsx  ← nơi duy nhất giữ state: todos[]
  ├── <TodoForm   onAdd={handleAdd} />
  ├── <TodoStat   todos={todos} />
- └── <TodoList   todos={todos}  onDelete={handleDelete}  onUpdate={handleUpdate} />
-      └── <TodoItem  todo={item}  onDelete  onUpdate />  (lặp cho mỗi item)
+ └── <TodoList   todos={todos}  onDelete={handleDelete}  onEdit={handleEdit} />
+      └── <TodoItem  todo={item}  onDelete  onEdit />  (lặp cho mỗi item)
            └── <EditTodoModal  todo  onSave  onClose />  (chỉ khi showModal=true)
 ```
 
@@ -93,7 +108,7 @@ App ◄──(gọi callback với id)──────────────
 ## 🔵 SỬA — Flow từ đầu đến cuối
 
 ```
-App định nghĩa handleUpdate  →  truyền xuống TodoList → TodoItem qua prop onUpdate
+App định nghĩa handleEdit  →  truyền xuống TodoList → TodoItem qua prop onEdit
                                         ↓
                               User nhấn "Sửa" ở TodoItem
                               setShowModal(true)  ← state nội bộ TodoItem
@@ -104,11 +119,11 @@ App định nghĩa handleUpdate  →  truyền xuống TodoList → TodoItem qua
                                         ↓
                               User nhấn "Lưu"
                               handleSubmit gọi onSave(todo.id, text)
-                              → onSave là prop onUpdate từ TodoItem
+                              → onSave là prop onEdit từ TodoItem
                               → TodoItem nhận từ TodoList
                               → TodoList nhận từ App
                                         ↓
-App nhận lệnh  →  handleUpdate(id, newText)
+App nhận lệnh  →  handleEdit(id, newText)
                →  setTodos(prev => prev.map(t =>
                     t.id === id ? {...t, text: newText} : t
                   ))
@@ -121,7 +136,7 @@ App nhận lệnh  →  handleUpdate(id, newText)
 **Props đi theo hướng (3 tầng):**
 
 ```
-App ──(onUpdate)──► TodoList ──(onUpdate as onUpdate)──► TodoItem ──(onUpdate as onSave)──► EditTodoModal
+App ──(onEdit)──► TodoList ──(onEdit as onEdit)──► TodoItem ──(onEdit as onSave)──► EditTodoModal
 App ◄──(gọi callback với id + newText)──────────────────────────────────────────────────── EditTodoModal
 ```
 

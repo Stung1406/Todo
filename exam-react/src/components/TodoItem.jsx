@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import EditTodoModal from './EditTodoModal';
 
-function TodoItem({todo, onDelete, onUpdate}) {
-    const [showModal, setShowModal] = useState(false);
+function TodoItem({todo, onDelete, onEdit}) {
 
+    const [showModal, setShowModal] = useState(false);  //cài đặt trạng thái của modal 
+
+    // Popup form sửa — chỉ render khi showModal = true
+        if (showModal) {
+            return (
+                <EditTodoModal
+                    todo={todo}
+                    onSave={onEdit}
+                    onClose={() => setShowModal(false)}
+                />
+                );
+            }
     return (
         <>
             <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -19,15 +30,6 @@ function TodoItem({todo, onDelete, onUpdate}) {
                     >Xóa</button>
                 </div>
             </li>
-
-            {/* Popup form sửa — chỉ render khi showModal = true */}
-            {showModal && (
-                <EditTodoModal
-                    todo={todo}
-                    onSave={onUpdate}
-                    onClose={() => setShowModal(false)}
-                />
-            )}
         </>
     )
 }
