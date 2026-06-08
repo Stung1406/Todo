@@ -1,0 +1,7 @@
+{
+ "todos" : [
+    { "id": 1, "text": "Học React", "completed": false },
+    { "id": 2, "text": "Làm bài tập", "completed": true },
+    { "id": 3, "text": "Đi chơi với bạn bè", "completed": false }
+]
+}
