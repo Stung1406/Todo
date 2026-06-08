@@ -38,7 +38,7 @@ function EditTodoModal({ todo, onSave, onClose }) {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={editText}
+                                value={editText} //bắt buộc phải có value 
                                 onChange={(e) => setEditText(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Escape' && onClose()}
                                 //autoFocus
@@ -50,7 +50,7 @@ function EditTodoModal({ todo, onSave, onClose }) {
                                 type="button"
                                 className="btn btn-secondary"
                                 onClick={onClose}
-                            >Hủy</button>
+                            >Đóng</button>
                             <button type="submit" className="btn btn-primary">
                                 Lưu
                             </button>
